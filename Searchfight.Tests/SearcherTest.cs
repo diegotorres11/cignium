@@ -38,7 +38,7 @@ namespace Tests
             moqYandexSearcher.Setup(s => s.Search(It.Is<string>(term => term == "java"))).ReturnsAsync(yandexJavaSearchResult);
             moqYandexSearcher.Setup(s => s.Search(It.Is<string>(term => term == ".net"))).ReturnsAsync(yandexDotNetSearchResult);
 
-            SearcherService mainSearcher = new SearcherService(searchTerm, calculator);
+            SearchService mainSearcher = new SearchService(searchTerm, calculator);
             mainSearcher.AddSearchEngine(moqYahooSearcher.Object);
             mainSearcher.AddSearchEngine(moqYandexSearcher.Object);
 

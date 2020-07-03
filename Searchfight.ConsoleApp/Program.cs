@@ -2,10 +2,9 @@
 using Service;
 using Service.Calculator.Abstract;
 using Service.Calculator.Concrete;
+using Service.Factory;
 using Service.Formatters.Abstract;
 using Service.Formatters.Concrete;
-using Service.SearchEngines.Concrete.Bing;
-using Service.SearchEngines.Concrete.Google;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +20,12 @@ namespace Searchfight.ConsoleApp
 
         static async Task MainAsync(string[] args)
         {
+            var searchFactory = new SearchFactory();
             var searchTerm = new SearchTerm(args);
             ICalculator calculator = new DefaultCalculator();
-            var searcher = new SearcherService(searchTerm, calculator);
-            searcher.AddSearchEngine(new GoogleSearcher());
-            searcher.AddSearchEngine(new BingSearcher());
+            var searcher = new SearchService(searchTerm, calculator);
+            searcher.AddSearchEngine(searchFactory.CreateSearcher(SearchEngine.Google));
+            searcher.AddSearchEngine(searchFactory.CreateSearcher(SearchEngine.Bing));
 
             await searcher.Search();
 

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class SearcherService
+    public class SearchService
     {
         public ICollection<Searcher> Searchers { get; private set; }
         public ICollection<SearchResult> SearchResults { get; private set; }
         public SearchTerm SearchTerm { get; }
         public ICalculator Calculator { get; }
 
-        public SearcherService(SearchTerm searchTerm, ICalculator calculator)
+        public SearchService(SearchTerm searchTerm, ICalculator calculator)
         {
             SearchTerm = searchTerm;
             Calculator = calculator;

@@ -63,10 +63,11 @@
   <ItemGroup>
     <Compile Include="Calculator\Abstract\ICalculator.cs" />
     <Compile Include="Calculator\Concrete\DefaultCalculator.cs" />
+    <Compile Include="Factory\SearchFactory.cs" />
     <Compile Include="SearchEngines\Concrete\Bing\BingSearcher.cs" />
     <Compile Include="SearchEngines\Concrete\Bing\BingSearchResult.cs" />
     <Compile Include="Configuration\Concrete\BingConfiguration.cs" />
-    <Compile Include="Configuration\Abstract\Configuration.cs" />
+    <Compile Include="Configuration\Abstract\IConfiguration.cs" />
     <Compile Include="Configuration\Concrete\GoogleConfiguration.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Formatters\Concrete\DefaultFormatter.cs" />
@@ -74,7 +75,7 @@
     <Compile Include="SearchEngines\Concrete\Google\GoogleSearcher.cs" />
     <Compile Include="SearchEngines\Concrete\Google\GoogleSearchResult.cs" />
     <Compile Include="SearchEngines\Abstract\Searcher.cs" />
-    <Compile Include="MainSearcher.cs" />
+    <Compile Include="SearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\SearchTermException.cs" />
     <Compile Include="Model\ResultsPerTerm.cs" />
+    <Compile Include="Model\SearchEngine.cs" />
     <Compile Include="Model\SearchResult.cs" />
     <Compile Include="Model\TotalWinner.cs" />
     <Compile Include="Model\WinnersPerEngine.cs" />
