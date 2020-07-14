@@ -28,14 +28,20 @@ namespace Service
 
         public async Task Search()
         {
+            var searchResultsTasks = new List<Task<SearchResult>>();
+
             foreach (Searcher searcher in Searchers)
             {
                 foreach (string term in SearchTerm.Terms)
                 {
-                    var searchResult = await searcher.Search(term);
-                    SearchResults.Add(searchResult);
+                    var searchResult = searcher.Search(term);
+                    searchResultsTasks.Add(searchResult);
                 }
             }
+
+            await Task.WhenAll(searchResultsTasks);
+
+            searchResultsTasks.ForEach(task => SearchResults.Add(task.Result));
         }
 
         public ResultsPerTerm ResultsPerTerm
