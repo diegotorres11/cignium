@@ -5,7 +5,9 @@ using Service.Calculator.Concrete;
 using Service.Factory;
 using Service.Formatters.Abstract;
 using Service.Formatters.Concrete;
+using Service.SearchEngines.Abstract;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,12 +22,10 @@ namespace Searchfight.ConsoleApp
 
         static async Task MainAsync(string[] args)
         {
-            var searchFactory = new SearchFactory();
             var searchTerm = new SearchTerm(args);
+            var searchers = GetSearchers();
             ICalculator calculator = new DefaultCalculator();
-            var searcher = new SearchService(searchTerm, calculator);
-            searcher.AddSearchEngine(searchFactory.CreateSearcher(SearchEngine.Google));
-            searcher.AddSearchEngine(searchFactory.CreateSearcher(SearchEngine.Bing));
+            var searcher = new SearchService(searchTerm, searchers, calculator);
 
             await searcher.Search();
 
@@ -38,6 +38,17 @@ namespace Searchfight.ConsoleApp
 
             Console.WriteLine(sb);
             Console.ReadLine();
+        }
+
+        static List<Searcher> GetSearchers()
+        {
+            var searchFactory = new SearchFactory();
+
+            return new List<Searcher>
+            {
+                searchFactory.CreateSearcher(SearchEngine.Google),
+                searchFactory.CreateSearcher(SearchEngine.Bing)
+            };
         }
     }
 }

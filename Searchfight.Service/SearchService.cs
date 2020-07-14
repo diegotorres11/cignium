@@ -13,11 +13,11 @@ namespace Service
         public SearchTerm SearchTerm { get; }
         public ICalculator Calculator { get; }
 
-        public SearchService(SearchTerm searchTerm, ICalculator calculator)
+        public SearchService(SearchTerm searchTerm, IList<Searcher> searchers, ICalculator calculator)
         {
             SearchTerm = searchTerm;
+            Searchers = searchers;
             Calculator = calculator;
-            Searchers = new List<Searcher>();
             SearchResults = new List<SearchResult>();
         }
 
