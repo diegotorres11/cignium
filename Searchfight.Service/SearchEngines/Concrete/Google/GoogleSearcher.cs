@@ -1,6 +1,7 @@
 ﻿using Domain.Model;
 using Service.Configuration.Concrete;
 using Service.SearchEngines.Abstract;
+using System;
 using System.Threading.Tasks;
 using Util;
 
@@ -16,10 +17,26 @@ namespace Service.SearchEngines.Concrete.Google
         public override async Task<SearchResult> Search(string term)
         {
             Config.Parameters["q"] = term.Replace(" ", "+");
-            var result = await WebServiceConsumer.ConsumeAsync<GoogleSearchResult>(Url);
-            var mappedResult = Map(result, term);
 
-            return mappedResult;
+            try
+            {
+                var result = await WebServiceConsumer.ConsumeAsync<GoogleSearchResult>(Url);
+                var mappedResult = Map(result, term);
+
+                return mappedResult;
+            }
+            catch (Exception ex)
+            {
+                //TODO: Log ex to a target
+                return new SearchResult
+                {
+                    SearchEngine = EngineName,
+                    SearchTerm = term,
+                    ResultsCount = 0,
+                    Status = SearchResultStatus.Error,
+                    ErrorMessage = "There was an issue"
+                };
+            }
         }
 
         private SearchResult Map(GoogleSearchResult result, string term)
@@ -28,7 +45,8 @@ namespace Service.SearchEngines.Concrete.Google
             {
                 SearchEngine = EngineName,
                 SearchTerm = term,
-                ResultsCount = result.SearchInformation.TotalResults
+                ResultsCount = result.SearchInformation.TotalResults,
+                Status = SearchResultStatus.Success
             };
         }
     }
